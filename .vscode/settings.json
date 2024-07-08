@@ -3,6 +3,13 @@
         "defs.h": "c",
         "types.h": "c",
         "memlayout.h": "c",
-        "stddef.h": "c"
+        "stddef.h": "c",
+        "algorithm": "c",
+        "atomic": "c",
+        "*.tcc": "c",
+        "memory": "c",
+        "new": "c",
+        "numeric": "c",
+        "system_error": "c"
     }
 }

@@ -101,7 +101,7 @@ extern uint64 sys_unlink(void);
 extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
-extern uint64 sys_getprocs(void);//add
+extern uint64 sys_getprocs(void); // first experiment---sixth operatio
 extern uint64 sys_test1(void);//test
 
 // An array mapping syscall numbers from syscall.h
@@ -129,7 +129,7 @@ static uint64 (*syscalls[])(void) = {
 [SYS_mkdir]   sys_mkdir,
 [SYS_close]   sys_close,
 //add
-[SYS_getprocs] sys_getprocs,
+[SYS_getprocs] sys_getprocs, // first experiment---seventh operation
 [SYS_test1] sys_test1,
 };
 

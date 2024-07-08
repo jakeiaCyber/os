@@ -681,20 +681,39 @@ procdump(void)
     printf("\n");
   }
 }
-//add
-int getprocs()
+// first experiment---fourth operation
+int
+getprocs(void)
 {
-  int count = 0;
+  static char *states[] = {
+    [UNUSED]    "unused",
+    [USED]      "used",
+    [SLEEPING]  "sleeping",
+    [RUNNABLE]  "runnble",
+    [RUNNING]   "run",
+    [ZOMBIE]    "zombie"
+  };
   struct proc *p;
- 
-  for(p = proc; p < &proc[NPROC]; p++) {
-    if(p->state == UNUSED)
-      continue;
-    count++;
+  char *state;
+  int num = 0;
+  printf("Active process:");
+  printf("\n");
+  for (p = proc; p < &proc[NPROC]; p++)
+  {
+    acquire(&p->lock);
+    if (p->state == RUNNABLE || p->state == RUNNING || p->state == SLEEPING || p->state == ZOMBIE)
+    {
+      num++;
+      state = states[p->state];
+      printf("%d, %s, %s", p->pid, state, p->name);
+      printf("\n");
+    }
+    release(&p->lock);
   }
-  return count;
+  return num;
 }
-void test_memory(char *ptr, int size, char pattern) {
+void 
+test_memory(char *ptr, int size, char pattern) {
     for(int i = 0; i < size; i++) {
         ptr[i] = pattern;
     }
@@ -705,27 +724,31 @@ void test_memory(char *ptr, int size, char pattern) {
         }
     }
 }
-int test1(){
-
+int test1()
+{
   printf("---test1-----\n");
   printf("ptr 64  ptr1 128  free ptr   ptr2 128\n");
   char* ptr = (char*)buddy_alloc(64);
-    if(ptr == 0) {
-        printf("test_malloc failed to allocate memory\n");
-        exit(0);
+    if(ptr == 0) 
+    {
+      printf("test_malloc failed to allocate memory\n");
+      exit(0);
     }
     printf("ptr alloc successed address:%p\n",ptr);
     char* ptr1 = (char*)buddy_alloc(128);
-    if(ptr1 == 0) {
-        printf("test_malloc failed to allocate memory\n");
-        exit(0);
+    if(ptr1 == 0) 
+    {
+      printf("test_malloc failed to allocate memory\n");
+      exit(0);
     }
   printf("ptr1 alloc successed address:%p\n",ptr1);
-    test_memory(ptr, 64,0xA);
-    buddy_free(ptr,64);
-    printf("ptr free successed\n");
-    char* ptr2 = (char*)buddy_alloc(128);
-    if(ptr2 == 0) {
+  test_memory(ptr, 64,0xA);
+  buddy_free(ptr,64);
+  printf("ptr free successed\n");
+
+  char* ptr2 = (char*)buddy_alloc(128);
+    if(ptr2 == 0) 
+    {
         printf("test_malloc failed to allocate memory\n");
         exit(0);
     }
@@ -740,25 +763,28 @@ int test1(){
     printf(" test passed\n");
 
 
-    printf("---test2-----\n");
+  printf("---test2-----\n");
   printf("ptr3 50 ptr4 115  free ptr3   ptr5 110\n");
   char* ptr3 = (char*)buddy_alloc(50);
-    if(ptr3 == 0) {
-        printf("test_malloc failed to allocate memory\n");
-        exit(0);
+    if(ptr3 == 0) 
+    {
+      printf("test_malloc failed to allocate memory\n");
+      exit(0);
     }
     printf("ptr3 alloc successed address:%p\n",ptr3);
     char* ptr4 = (char*)buddy_alloc(115);
-    if(ptr4 == 0) {
-        printf("test_malloc failed to allocate memory\n");
-        exit(0);
+    if(ptr4 == 0) 
+    {
+      printf("test_malloc failed to allocate memory\n");
+      exit(0);
     }
   printf("ptr4 alloc successed address:%p\n",ptr4);
     test_memory(ptr3, 50,0xA);
     buddy_free(ptr3,50);
     printf("ptr3 free successed\n");
     char* ptr5 = (char*)buddy_alloc(110);
-    if(ptr5 == 0) {
+    if(ptr5 == 0) 
+    {
         printf("test_malloc failed to allocate memory\n");
         exit(0);
     }
@@ -771,27 +797,33 @@ int test1(){
     printf("ptr5 free successed\n");
     // 其他测试添加在此处
     printf(" test passed\n");
-   
+  
+
     printf("---test3-----\n");
     printf("ptr6 1 ptr7 8388608(2^23)   ptr8 8388608(2^23)\n");
     char* ptr6=(char*)buddy_alloc(1);
-    if(ptr6 == 0) {
-        printf("ptr6 failed to allocate memory\n");
-        exit(0);
+    if(ptr6 == 0) 
+    {
+      printf("ptr6 failed to allocate memory\n");
+      exit(0);
     }
-    else{ printf("ptr6 alloc successed address:%p\n",ptr6);}
+    else{ 
+      printf("ptr6 alloc successed address:%p\n",ptr6);
+    }
     char* ptr7=(char*)buddy_alloc(8388608);
-    if(ptr7 == 0) {
-        printf("ptr7 failed to allocate memory\n");
-        exit(0);
+    if(ptr7 == 0) 
+    {
+      printf("ptr7 failed to allocate memory\n");
+      exit(0);
     }
     else{
       printf("ptr7 alloc successed address:%p\n",ptr7);
     }
     char* ptr8=(char*)buddy_alloc(8388608);
-    if(ptr8 == 0) {
-        printf("ptr8 failed to allocate memory\n");
-        exit(0);
+    if(ptr8 == 0) 
+    {
+      printf("ptr8 failed to allocate memory\n");
+      exit(0);
     }
     else{
       printf("ptr8 alloc successed address:%p\n",ptr8);

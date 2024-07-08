@@ -89,9 +89,15 @@ sys_uptime(void)
   release(&tickslock);
   return xticks;
 }
-uint64 sys_getprocs(void){
-    return getprocs();
+// first experiment---second operation
+int
+sys_getprocs(void)
+{
+  return getprocs();
 }
-uint64  sys_test1(void){
-    return test1();
+
+uint64
+sys_test1(void)
+{
+  return test1();
 }

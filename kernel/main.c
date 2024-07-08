@@ -30,12 +30,10 @@ main()
     virtio_disk_init(); // emulated hard disk
     userinit();      // first user process
     __sync_synchronize();
+    // init --second experiment
     buddy_system_init();
-    buddy_init();//init buddy
+    buddy_init();
     started = 1;
-  
-  
-  
   } else {
     while(started == 0)
       ;
