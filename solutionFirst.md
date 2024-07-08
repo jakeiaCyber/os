@@ -4,12 +4,12 @@
 ## 实验目的:
 理解xv6中系统调用的工作原理。
 ### 实验步骤：
-1.user.h定义函数头：作为用户进程实现系统调用的接口，这种函数接口即为系统调用,目的是调用处在内核文件下的函数
+1. user.h定义函数头：作为用户进程实现系统调用的接口，这种函数接口即为系统调用,目的是调用处在内核文件下的函数
 ```c
 int getprocs(void);// first experiment---first operation
 ```
 
-2.在sysproc.c的文件中实现sys_getprocs函数来实现系统调用
+2. 在sysproc.c的文件中实现sys_getprocs函数来实现系统调用
 ```c
 // first experiment---second operation
 int
@@ -20,12 +20,12 @@ sys_getprocs(void)
 ```
 在sys_getprocs函数中不会直接实现想要的功能，而是通过调用内核中的一个普通函数来实现封装性，所以接下来我们需要在内核文件中定义getprocs()来实现我们想要的功能
 
-3.在内核文件下的def.h定义getprocs()的函数头
+3. 在内核文件下的def.h定义getprocs()的函数头
 ```c
 int             getprocs(void); // first experiment---fourth operation   
 ```
 
-4.接下来我们在内核文件夹下新建proc.c文件来实现真正的功能
+4. 接下来我们在内核文件夹下新建proc.c文件来实现真正的功能
 ```c
 // first experiment---fourth operation
 int
@@ -95,12 +95,12 @@ struct proc {
   };
 ```
 
-5.在实现完功能后我们要为新添加的系统调用定义一个唯一的调用号,在syscall.h文件中增加
+5. 在实现完功能后我们要为新添加的系统调用定义一个唯一的调用号,在syscall.h文件中增加
 ```c
 #define SYS_getprocs 22 // first experiment---fifth operation
 ```
 
-6.接下来我们要更新syscall.c文件，让它根据我们定义的调用号来进行调用
+6. 接下来我们要更新syscall.c文件，让它根据我们定义的调用号来进行调用
 ```c
 extern uint64 sys_getprocs(void); // first experiment---sixth operation
 ```
@@ -133,7 +133,7 @@ static uint64 (*syscalls[])(void) = {
 ```
 将系统调用号与系统调用的实现函数进行映射
 
-7.接下来我们要在usys.pl实现用户控件的映射
+7. 接下来我们要在usys.pl实现用户控件的映射
 ```perl
 entry("getprocs");  # first experiment---eighth operation
 ```
@@ -145,7 +145,7 @@ getprocs:
  ret
 ```
 
-8.然后自己编写一个测试文件，在user下叫做myExperimentFirst.c
+8. 然后自己编写一个测试文件，在user下叫做myExperimentFirst.c
 ```c
 // first experiment---nineth operation
 #include "kernel/types.h"
@@ -159,7 +159,7 @@ int main(int argc, char const *argv[])
 }
 ```
 
-9.再对Makefile文件进行修改
+9. 再对Makefile文件进行修改
 ```makefile
 #first experiment---tenth operation
 UPROGS=\
@@ -182,10 +182,10 @@ UPROGS=\
 	$U/_myExperimentFirst\
 ```
 
-10.重新编译内核并测试
+10. 重新编译内核并测试
 ![result](./otherImage/result.png)
 
-11.对系统调用的解释：
+11. 对系统调用的解释：
 ```c
 // syscall.c
 void

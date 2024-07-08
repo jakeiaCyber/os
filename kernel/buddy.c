@@ -1,27 +1,4 @@
-#include <stddef.h>
-#include "types.h"
-#include "param.h"
-#include "memlayout.h"
-#include "spinlock.h"
-#include "riscv.h"
-#include "defs.h"
-
-#define MAX_ORDER 24  // 最大的阶数
-#define START 0x87000000  // 起始虚拟地址
-#define END 0x88000000    // 终止虚拟地址
-typedef unsigned long uintptr_t; // 指针类型
-
-
-struct buddy {
-    int size;  // 内存块的大小
-    struct buddy *next;  // 指向下一个同大小的内存块
-    struct spinlock lock; // 用于保护块的访问
-};
-
-struct buddy_list {
-    struct buddy *free_list[MAX_ORDER + 1];  // 每个阶的空闲块链表
-    struct spinlock lock; // 用于保护链表的访问
-};
+#include "buddy.h"
 
 void* memory = (void*)START; //指向分配器起始地址的指针
 static struct buddy_list *bl[NCPU]; //指向每个CPU的buddy_list结构体的指针数组。NCPU是系统中CPU的数量
@@ -51,6 +28,7 @@ buddy_system_init()
         initlock(&bl[i]->lock, "buddy_list_lock");
     }
 }
+
 void 
 buddy_init()
 {
@@ -72,7 +50,7 @@ void
 *buddy_alloc(int size)
 {
     int order = 0;
-    // 找到最小的阶数，使得2^blockSizeIndex >= size
+    // 找到最小的阶数，使得2^order >= size
     while ((1 << order) < size) order++;
     // 获取当前CPU的锁，防止多个CPU同时访问
     acquire(&bl[cpuid()]->lock);
