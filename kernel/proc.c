@@ -712,18 +712,24 @@ getprocs(void)
   }
   return num;
 }
+
 void 
-test_memory(char *ptr, int size, char pattern) {
-    for(int i = 0; i < size; i++) {
+test_memory(char *ptr, int size, char pattern)
+{
+    for(int i = 0; i < size; i++)
+    {
         ptr[i] = pattern;
     }
-    for(int i = 0; i < size; i++) {
-        if(ptr[i] != pattern) {
+    for(int i = 0; i < size; i++)
+    {
+        if(ptr[i] != pattern)
+        {
             printf("Memory check failed at position");
             exit(-1);
         }
     }
 }
+
 int test1()
 {
   printf("---test1-----\n");
