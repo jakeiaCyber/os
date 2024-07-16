@@ -41,5 +41,5 @@ int memcmp(const void *, const void *, uint);
 void *memcpy(void *, const void *, uint);
 
 //change
-int getprocs(void);// first experiment---first operatio
+int getprocs(void);// first experiment---first operation
 int test1 (void);
