@@ -36,5 +36,5 @@ entry("getpid");
 entry("sbrk");
 entry("sleep");
 entry("uptime");
-entry("getprocs");  # first experiment---eighth operatio
+entry("getprocs");  # first experiment---eighth operation
 entry("test1");

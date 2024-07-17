@@ -101,7 +101,7 @@ extern uint64 sys_unlink(void);
 extern uint64 sys_link(void);
 extern uint64 sys_mkdir(void);
 extern uint64 sys_close(void);
-extern uint64 sys_getprocs(void); // first experiment---sixth operatio
+extern uint64 sys_getprocs(void); // first experiment---sixth operation
 extern uint64 sys_test1(void);//test
 
 // An array mapping syscall numbers from syscall.h
